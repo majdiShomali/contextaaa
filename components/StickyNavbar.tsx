@@ -1,12 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
-import {
-  Navbar,
-  Collapse,
-  Typography,
-  Button,
-  IconButton,
-} from "@material-tailwind/react";
+import React from "react";
+
 import Link from "next/link";
 import { useUserContext } from "@/context/userContext/userContext";
 // import LogOutButton from "./registration/LogOutButton";
