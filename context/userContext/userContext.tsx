@@ -1,11 +1,9 @@
 "use client"
-import React, { createContext, useState, useEffect, useContext } from "react";
-import axios, { AxiosError } from "axios";
-import { UserType } from "@/types/userData";
+import React, { createContext, useState, useContext } from "react";
 
 type userContextType = {
-  user:UserType,
-  setUser:React.Dispatch<React.SetStateAction<UserType>>
+  user:string,
+  setUser:React.Dispatch<React.SetStateAction<string>>
 }|undefined
 
 export const UserContext = createContext<userContextType>(undefined);
@@ -15,39 +13,9 @@ interface UserProviderProps {
 }
 
 const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<UserType>();
+  const [user, setUser] = useState<string>("");
 
 
-  interface UserResponse {
-    user: string | null;
-    error: AxiosError | null;
-  }
-  async function getUser(): Promise<UserResponse> {
-    try {
-      const { data } = await axios.get("/api/auth/me");
-      setUser(data)
-      return {
-        user: data,
-        error: null,
-      };
-    } catch (e) {
-      const error = e as AxiosError;
-  
-      return {
-        user: null,
-        error,
-      };
-    }
-  }
-  useEffect(() => {
-    (async () => {
-      const { user, error } = await getUser();
-
-      if (error) {
-        return;
-      }
-    })();
-  }, []);
   return (
     <UserContext.Provider
       value={{
